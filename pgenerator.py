@@ -4,7 +4,34 @@ import random
 uppercaseLetter = lambda : chr(random.randint(ord('A'), ord('Z')))
 lowercaseletter = lambda : chr(random.randint(ord('a'), ord('z')))
 digit = lambda : str(random.randint(0, 9))
-punctuationSign = lambda : chr(random.randint(33, 47))
+punc_part_1 = lambda : chr(random.randint(33, 47)) # 15 punct signs (! to /)
+punc_part_2 = lambda : chr(random.randint(58, 64)) # 7 punct signs (: to @)
+punc_part_3 = lambda : chr(random.randint(91, 96)) # 6 punct signs ([ to `)
+punc_part_4 = lambda : chr(random.randint(123, 126)) # 4 punct signs ({ to ~)
+
+def punctuationSign():
+	"""return random punctuation sign from 32 signs of ASCII table
+
+	this function will randomly choose one punctuation sign from 32
+	indivitual signs.
+	Args:
+		None
+	Return:
+		1 Sign
+	Raises:
+		None
+	"""
+	all_punctuations = ["punc_part_1", "punc_part_2", "punc_part_3", "punc_part_4"]
+	punch = random.choice(all_punctuations)
+	match punch:
+		case "punc_part_1":
+			return punc_part_1()
+		case "punc_part_2":
+			return punc_part_2()
+		case "punc_part_3":
+			return punc_part_3()
+		case default:
+			return punc_part_4()
 
 def generator(passSize):
 	"""return "passSize" digit password
@@ -20,7 +47,7 @@ def generator(passSize):
 	"""
 	# list of possible password elements
 	passElements = ["uppercaseLetter", "lowercaseletter", "digit", "punctuationSign"]
-	password = []
+	password = [] # we used list here so that we can suffle the list after this loop (string immutable)
 	for i in range(passSize):
 		# choicing a random element for the password and appending to password
 		element = random.choice(passElements)
