@@ -63,7 +63,11 @@ def generator(passSize):
 	random.shuffle(password) # shuffling the password
 	return "".join(password) # returning as a string
 
-p = int(input("How many password you want to generate: "))
-for _ in range(p):
-	size = int(input("Password size = "))
-	print("Pass :", generator(size))
+def main():
+	p = int(input("How many password you want to generate: "))
+	for _ in range(p):
+		size = int(input("Password size = "))
+		print("Pass :", generator(size))
+
+if __name__ == "__main__":
+	main()
