@@ -1,0 +1,75 @@
+/* 
+/* body {
+    /* background-color: aquamarine; */
+/* border: 2px solid blue;
+border-radius: 2%;
+text-align: left;
+padding-left: 20%;
+padding-right: 20%;
+background-color: aquamarine;
+width: 10%;
+height: 10%;
+margin-left: 20%;
+margin-right: 20%;
+} */
+/* #coppy {
+    background-color: tomato;
+    size: 2em;
+    height: 150%;
+    border-radius: 15%;
+} */
+
+/* #length {
+    display: flex;
+} */
+
+#main {
+    margin-top: 5%;
+    border: 2px solid blue;
+    border-radius: 4%;
+    padding-left: 20%;
+    padding-right: 20%;
+    padding-bottom: 7%;
+    padding-top: 3%;
+    background-color: aquamarine;
+    width: 10%;
+    height: 10%;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+body {
+    color: red;
+    background-color: rgb(111, 78, 143);
+    /* border: 2px solid blue; */
+
+
+
+}
+
+#footer {
+    display: flex;
+    display: inline;
+}
+
+#exit {
+    background-color: rgb(189, 75, 98);
+}
+
+/* #coppy {
+    background-color: greenyellow;
+} */
+
+#generate_btn {
+    background-color: darksalmon;
+}
+
+#showingPass {
+    height: 100%;
+    width: 100%;
+}
+
+#inp {
+    height: 100%;
+    width: 100%;
+}
