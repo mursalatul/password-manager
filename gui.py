@@ -2,35 +2,101 @@ import tkinter as tk
 import pgenerator
 import tkinter.messagebox as msgbox
 
-# custom module
-import save_gui
-
 # initializing classes
 pass_object = pgenerator.PGenerator()
 
 # functions
 def password_Insert():
-    generated_password.delete(0, "end")
+    """
+    clean password showing entry and display generated password
+    """
+    generated_password_entry.delete(0, "end")
     if len(password_len.get()) > 0:
         password = pass_object.generator(int(password_len.get()))
-        generated_password.insert(0, password)
+        generated_password_entry.insert(0, password)
 
-# def copy_Pass():
-#     pass
 
 def copy_Pass():
+    """
+    copy password into clip board and popup complete notification
+    """
     try:
-        generated_password = generated_password.get() # Get the text from the Entry widget
-        root = generated_password.winfo_toplevel() # Get the root window
+        generated_password_entry = generated_password_entry.get() # Get the text from the Entry widget
+        root = generated_password_entry.winfo_toplevel() # Get the root window
         root.clipboard_clear() # Clear the clipboard
-        root.clipboard_append(generated_password) # Append the text to the clipboard
+        root.clipboard_append(generated_password_entry) # Append the text to the clipboard
         msgbox.showinfo("Copy to Clipboard", "Data copied to clipboard!")
     except Exception as e:
         msgbox.showerror("Error", f"Error copying to clipboard: {str(e)}")
 
+
+def enableSaveButton():
+    """
+    enable save button
+    """
+    save_button.config(state=tk.NORMAL)
+
+    
+def savePassword():
+    """
+    popup username and password save page 
+    """
+    def distoryAndEnable_Save_Button():
+        """
+        enable savebutton & destroy save_wn
+        NOTE: USE ONLY FOR SAVE_WN & INSIDE savePassword()
+        """
+        enableSaveButton()
+        save_wn.destroy()
+
+    # check if username and password present in the entry
+    def checker():
+        if len(username_entry.get()) == 0:
+            msgbox.showinfo("Error", "No Username to save!")
+        elif len(password_entry.get()) == 0:
+            msgbox.showinfo("Error", "No Password to save!")
+        else:
+            # save data in store
+            msgbox.showinfo("Done", "Password Saved")
+            distoryAndEnable_Save_Button()
+    # setup tkinter
+    save_wn = tk.Tk() # save_wn = save_window
+    save_wn.minsize(450, 450)
+    save_wn.maxsize(450, 450)
+    save_wn.configure(bg="#5DADE2")
+
+    # home page button
+    tk.Button(save_wn, text="HOME", command=distoryAndEnable_Save_Button).grid(row=0, column=0)
+    # exit button
+    tk.Button(save_wn, text="Exit", command=distoryAndEnable_Save_Button).grid(row=0, column=1)
+
+    # username lable
+    username_lable = tk.Label(save_wn, text="Username")
+    username_lable.grid(row=1,column=1)
+
+    # username entry
+    username_entry = tk.Entry(save_wn)
+    username_entry.grid(row=1, column=2)
+
+    # password lable
+    password_lable = tk.Label(save_wn, text="Password")
+    password_lable.grid(row=2,column=1)
+
+    # password entry
+    password_entry = tk.Entry(save_wn)
+    password_entry.grid(row=2, column=2)
+    # adding generated password
+    password_entry.insert(0, generated_password_entry.get())
+
+    # save button
+    save_button = tk.Button(save_wn, text="Save", command=checker)
+    save_button.grid(row=3, column=1)
+    save_wn.mainloop()
+
 # save generated password
 def savepassword():
-    save_gui.SavePassword(generated_password.get())
+    save_button.config(state=tk.DISABLED) # disabling the save_button so that no multiple save window open
+    savePassword()
 
 if __name__ == "__main__":
     # setup tkinter
@@ -59,14 +125,15 @@ if __name__ == "__main__":
     # check if the password len is in right format or not in next update. in this version we consider user will input right number
 
     tk.Label(window, text="Password: ", bg="#5DADE2").pack()
-    generated_password = tk.Entry(window)
-    generated_password.pack()
-    GENERATED_PASSWORD = generated_password
+    generated_password_entry = tk.Entry(window)
+    generated_password_entry.pack()
 
     # copy password
     tk.Button(window, text="Copy", command=copy_Pass).pack()
     #save button
-    tk.Button(window, text="Save", command=savepassword).pack()
+    save_button = tk.Button(window, text="Save", command=(savepassword))
+    save_button.pack();
+    
     # exit program button
     tk.Button(window, text="EXIT", bg="#EC7063", relief="raised", activebackground="#e35e17",command=exit).pack()
     window.mainloop()
