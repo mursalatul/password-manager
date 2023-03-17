@@ -2,16 +2,17 @@ import tkinter as tk
 import pgenerator
 import tkinter.messagebox as msgbox
 
-# initializing classes
-pass_object = pgenerator.PGenerator()
 
 # functions
 def password_Insert():
     """
     clean password showing entry and display generated password
     """
+    # cleaning password showing entry for new password
     generated_password_entry.delete(0, "end")
     if len(password_len.get()) > 0:
+        # initializing object. this object will create required password
+        pass_object = pgenerator.PGenerator()
         password = pass_object.generator(int(password_len.get()))
         generated_password_entry.insert(0, password)
 
