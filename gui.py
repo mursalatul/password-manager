@@ -12,9 +12,8 @@ def password_Insert():
     generated_password_entry.delete(0, "end")
     if len(password_len.get()) > 0:
         # initializing object. this object will create required password
-        pass_object = pgenerator.PGenerator()
-        password = pass_object.generator(int(password_len.get()))
-        generated_password_entry.insert(0, password)
+        pass_object = pgenerator.PGenerator(int(password_len.get()))
+        generated_password_entry.insert(0, str(pass_object.password))
 
 
 def copy_Pass():
