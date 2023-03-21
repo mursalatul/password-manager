@@ -1,11 +1,12 @@
 import pgenerator, pstore
 
 def main():
-    pass_object = pgenerator.PGenerator()
+    pass_object = None
     p = int(input("How many password you want to generate: "))
     for _ in range(p):
         size = int(input("Password size = "))
-        password = pass_object.generator(size)
+        pass_object = pgenerator.PGenerator(size)
+        password = pass_object.password
         print("Pass :", password)
         save_pass_query = input("Do you want to save it? (Yes / No)").strip().lower()
         pass_store = pstore.PStore()

@@ -1,7 +1,8 @@
 import tkinter as tk
-import pgenerator
 import tkinter.messagebox as msgbox
 
+import pgenerator
+import pstore
 
 # functions
 def password_Insert():
@@ -24,7 +25,8 @@ def copy_Pass():
         root = generated_password_entry.winfo_toplevel() # Get the root window
         root.clipboard_clear() # Clear the clipboard
         # generated_password_entry.get() will be 'Too Short' only if password_len.get() < 4
-        if (generated_password_entry.get() != 'Too Short'):
+        if (generated_password_entry.get() != 'Too Short' and generated_password_entry
+            .get() != ''):
             root.clipboard_append(generated_password_entry.get()) # Append the text to the clipboard
             msgbox.showinfo("Copy to Clipboard", "Data copied to clipboard!")
         else:
@@ -62,6 +64,9 @@ def savePassword():
             msgbox.showinfo("Error", "No Password to save!")
         else:
             # save data in store
+            pstore_obj = pstore.PStore()
+            # saving username and password
+            pstore_obj.pStore(username_entry.get(), password_entry.get())
             msgbox.showinfo("Done", "Password Saved")
             distoryAndEnable_Save_Button()
     # setup tkinter
