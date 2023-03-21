@@ -18,14 +18,19 @@ def password_Insert():
 
 def copy_Pass():
     """
-    copy password into clip board and popup complete notification
+    copy password into clip board and popup status notification
     """
     try:
-        generated_password_entry = generated_password_entry.get() # Get the text from the Entry widget
         root = generated_password_entry.winfo_toplevel() # Get the root window
         root.clipboard_clear() # Clear the clipboard
-        root.clipboard_append(generated_password_entry) # Append the text to the clipboard
-        msgbox.showinfo("Copy to Clipboard", "Data copied to clipboard!")
+        # generated_password_entry.get() will be 'Too Short' only if password_len.get() < 4
+        if (generated_password_entry.get() != 'Too Short'):
+            root.clipboard_append(generated_password_entry.get()) # Append the text to the clipboard
+            msgbox.showinfo("Copy to Clipboard", "Data copied to clipboard!")
+        else:
+            # cleaning clip board as the it hold 'Too Short' and it is not a password
+            root.clipboard_clear()
+            msgbox.showinfo("Not a password", "Size of the password should greater than 3!")
     except Exception as e:
         msgbox.showerror("Error", f"Error copying to clipboard: {str(e)}")
 
@@ -122,14 +127,13 @@ if __name__ == "__main__":
     tk.Button(window, text="Generate", command=password_Insert).pack()
 
     # show generated password
-    # check if the password len is in right format or not in next update. in this version we consider user will input right number
-
     tk.Label(window, text="Password: ", bg="#5DADE2").pack()
     generated_password_entry = tk.Entry(window)
     generated_password_entry.pack()
 
     # copy password
     tk.Button(window, text="Copy", command=copy_Pass).pack()
+
     #save button
     save_button = tk.Button(window, text="Save", command=(savepassword))
     save_button.pack();
