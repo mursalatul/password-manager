@@ -14,20 +14,40 @@ def logInAsAdmin():
     untill the program is closed.
     """
     # functions of logInAsAdmin()
-    def checkUserPassOfAdmin():
+    def adminRegister():
+        """
+        take username and password and save to admin.txt file
+        """
+        with open('admin.txt', 'w') as f:
+            f.write(admin_username_entry.get()+'\n') # write username
+            f.write(admin_password_entry.get()+'\n') # write password
+            msgbox.showinfo('Registration Complete', f'You have successfully registered as {admin_username_entry.get()}\U0001F600')
+            login_wn.destroy() # destroy logInAsAdmin window
+
+    def adminLogin():
         f = open('admin.txt', 'r')
         admin_username_from_txt = f.readline()[:-1] # removing last char cause it is \n at last of every line
-        admin_password_from_txt = f.readline()[:-1]
+        admin_password_from_txt = f.readline()[:-1] #                           ||
         f.close()
         if admin_username_from_txt == admin_username_entry.get() and admin_password_from_txt == admin_password_entry.get():
             # seting asAdmin = True. from now no subwindow need login
             global asAdmin
             asAdmin = True
             msgbox.showinfo("LOGIN", "Complete .")
-            login_wn.destroy()
+            login_wn.destroy() # destroy logInAsAdmin window
         else:
             msgbox.showinfo("Error", "Wrong username or password")
-
+    
+    def logInOrRegesterButton():
+        """
+        check status of admin file. if it has already username and password then
+        return login signal. else return register signal
+        """
+        with open('admin.txt', 'r') as f:
+            if len(f.readlines()) == 2: # size will be 2 if and only if user and pass present
+                return 'login'
+            else:
+                return 'Register'
     # setup tkinter
     login_wn = tk.Tk() # login_wn = login_window
     login_wn.minsize(450, 450)
@@ -51,9 +71,15 @@ def logInAsAdmin():
     admin_password_entry = tk.Entry(login_wn)
     admin_password_entry.grid(row=1, column=1, padx=10, pady=10)
 
-    # login button
-    tk.Button(login_wn, text="Login", command=checkUserPassOfAdmin).grid(row=3, columnspan=2, pady=10)
-    
+    # if admin.txt is empty then no log in data is present. in this case program will show
+    # register button instead of login button
+    if logInOrRegesterButton() == 'login':
+        # login button
+        tk.Button(login_wn, text="Login", command=adminLogin).grid(row=3, columnspan=2, pady=10)
+    else:
+        # register button
+        tk.Button(login_wn, text="Register", command=adminRegister).grid(row=3, columnspan=2, pady=10)
+
     login_wn.mainloop()
 
 def password_Insert():
@@ -120,6 +146,7 @@ def savePassword():
             pstore_obj.pStore(username_entry.get(), password_entry.get())
             msgbox.showinfo("Done", "Password Saved")
             distoryAndEnable_Save_Button()
+    
     # setup tkinter
     save_wn = tk.Tk() # save_wn = save_window
     save_wn.minsize(450, 450)
