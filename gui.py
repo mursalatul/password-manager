@@ -193,40 +193,48 @@ if __name__ == "__main__":
     # admin
     asAdmin = False # when user login asAdmin will be true
 
+    # gui maintain variables
+    LABEL_FONT_SIZE = 15
+    LABEL_FONT_NAME = 'Bookman Old Style'
+    BUTTON_FONT_NAME = 'Sans-serif'
+    BUTTON_FONT_SIZE = 10
     # setup tkinter
     window = tk.Tk()
     # window.geometry("500X600")
-    window.minsize(550, 550)
-    window.maxsize(550, 550)
-    window.configure(bg="#5DADE2")
+    window.minsize(300, 350)
+    window.maxsize(300, 350)
+    window.configure(bg="#336F84")
+    window.title('Password Manager')
 
-    # heading
-    heading = tk.Label(window, text="Password Generator", bg="#5DADE2")
-    # heading.grid(rowspan=1, column=2)
-    heading.pack()
-
-    password_len_text = tk.Label(window, text="Lenth : ", bg="#5DADE2")
-    password_len_text.pack()
+    lenth_label = tk.Label(window, text="Lenth : ", bg="#336F84")
+    lenth_label.config(font=(LABEL_FONT_NAME, LABEL_FONT_SIZE))
+    lenth_label.grid(row=0, column=0, padx=10, pady=20)
 
     # take lenth from user
     password_len = tk.Entry(window)
-    password_len.pack()
+    password_len.grid(row=0, column=1, pady=10)
 
     # generate button
-    tk.Button(window, text="Generate", command=password_Insert).pack()
+    generate_button = tk.Button(window, text="Generate", bg='#AED7E5', activebackground='#4CB5DA', command=password_Insert)
+    generate_button.config(font=(BUTTON_FONT_NAME, BUTTON_FONT_SIZE))
+    generate_button.grid(row=1, columnspan=2, padx=10, ipady=5)
 
     # show generated password
-    tk.Label(window, text="Password: ", bg="#5DADE2").pack()
+    # label
+    password_label = tk.Label(window, text="Password: ", bg="#336F84")
+    password_label.config(font=(LABEL_FONT_NAME, LABEL_FONT_SIZE))
+    password_label.grid(row=2,column=0, padx=10, pady=10)
+    # entry
     generated_password_entry = tk.Entry(window)
-    generated_password_entry.pack()
+    generated_password_entry.grid(row=2, column=1, padx=10, pady=10)
 
     # copy password
-    tk.Button(window, text="Copy", command=copy_Pass).pack()
+    tk.Button(window, text="Copy", command=copy_Pass, font=(BUTTON_FONT_NAME, BUTTON_FONT_SIZE), bg='#AED7E5', activebackground='#4CB5DA').grid(row=3, column=0,padx=10, pady=10)
 
     #save button
-    save_button = tk.Button(window, text="Save", command=(savepassword))
-    save_button.pack();
+    save_button = tk.Button(window, text="Save", command=(savepassword), font=(BUTTON_FONT_NAME, BUTTON_FONT_SIZE), bg='#AED7E5', activebackground='#4CB5DA')
+    save_button.grid(row=3, column=1, padx=10, pady=10)
     
     # exit program button
-    tk.Button(window, text="EXIT", bg="#EC7063", relief="raised", activebackground="#e35e17",command=exit).pack()
+    tk.Button(window, text="EXIT", bg="#EC7063", relief="raised", activebackground="#e35e17",command=exit).grid(row=4, columnspan=2, padx=10, pady=10)
     window.mainloop()
