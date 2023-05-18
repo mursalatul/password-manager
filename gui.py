@@ -1,11 +1,15 @@
 import tkinter as tk
 import tkinter.messagebox as msgbox
+from  tkinter import ttk 
+
+import sys
 
 import pgenerator
 import pstore
 
 # functions
 
+# login section starts
 def logInAsAdmin():
     """
     Create a login pannel for log in as admin.
@@ -14,6 +18,19 @@ def logInAsAdmin():
     untill the program is closed.
     """
     # functions of logInAsAdmin()
+    def modifyText(adminWindowCustomFontForText: tuple, txtObjects: tuple) -> None:
+        """
+        modify texts of labels
+        """
+        # ADMIN_WINDOW_TEXT_BG_COLOR: handle the meterial view by giving the text field a solid color in front of the
+        #       background color. for setting the meterial view we need to match the bg color 
+        #       with the applied solid color.
+        ADMIN_WINDOW_TEXT_BG_COLOR = "#6495ED"
+
+        for obj in txtObjects:
+            obj.config(font=adminWindowCustomFontForText, highlightbackground=ADMIN_WINDOW_TEXT_BG_COLOR, bg=ADMIN_WINDOW_TEXT_BG_COLOR)
+
+
     def adminRegister():
         """
         take username and password and save to admin.txt file
@@ -48,16 +65,23 @@ def logInAsAdmin():
                 return 'login'
             else:
                 return 'Register'
+    
+    # admin gui maintaining properties
+    ADMIN_WINDOW_BG_COLOR = "#5DADE2"
+    ADMIN_WINDOW_WIDTH = 280
+    ADMIN_WINDOW_HEIGHT = 250
+    ADMIN_WINDOW_TEXT_FONT = ("Montserrat", 12)
+
     # setup tkinter
     login_wn = tk.Tk() # login_wn = login_window
-    login_wn.minsize(450, 450)
-    login_wn.maxsize(450, 450)
-    login_wn.configure(bg="#5DADE2")
+    login_wn.minsize(ADMIN_WINDOW_WIDTH, ADMIN_WINDOW_HEIGHT)
+    login_wn.maxsize(ADMIN_WINDOW_WIDTH, ADMIN_WINDOW_HEIGHT)
+    login_wn.configure(bg=ADMIN_WINDOW_BG_COLOR)
     login_wn.title("ADMIN Pannel")
 
     # username
     #         lable
-    admin_username_lable = tk.Label(login_wn, text="Username: ")
+    admin_username_lable = tk.Label(login_wn, text="Username: ", bg=ADMIN_WINDOW_BG_COLOR)
     admin_username_lable.grid(row=0, column=0, padx=10, pady=10)
     #         entry
     admin_username_entry = tk.Entry(login_wn)
@@ -65,22 +89,26 @@ def logInAsAdmin():
 
     # password
     #         lable
-    admin_password_lable = tk.Label(login_wn, text="Password: ")
+    admin_password_lable = tk.Label(login_wn, text="Password: ", bg=ADMIN_WINDOW_BG_COLOR)
     admin_password_lable.grid(row=1, column=0, padx=10, pady=10)
     #         entry
     admin_password_entry = tk.Entry(login_wn)
     admin_password_entry.grid(row=1, column=1, padx=10, pady=10)
 
+    # modify the text of labels
+    modifyText(ADMIN_WINDOW_TEXT_FONT, (admin_username_lable, admin_password_lable))
+
     # if admin.txt is empty then no log in data is present. in this case program will show
     # register button instead of login button
     if logInOrRegesterButton() == 'login':
         # login button
-        tk.Button(login_wn, text="Login", command=adminLogin).grid(row=3, columnspan=2, pady=10)
+        tk.Button(login_wn, text="Login", command=adminLogin, font=ADMIN_WINDOW_TEXT_FONT).grid(row=3, columnspan=2, pady=10)
     else:
         # register button
-        tk.Button(login_wn, text="Register", command=adminRegister).grid(row=3, columnspan=2, pady=10)
+        tk.Button(login_wn, text="Register", command=adminRegister, font=ADMIN_WINDOW_TEXT_FONT).grid(row=3, columnspan=2, pady=10)
 
     login_wn.mainloop()
+    # login section end
 
 def password_Insert():
     """
@@ -196,17 +224,21 @@ if __name__ == "__main__":
     # gui maintain variables
     LABEL_FONT_SIZE = 15
     LABEL_FONT_NAME = 'Bookman Old Style'
+    
     BUTTON_FONT_NAME = 'Sans-serif'
     BUTTON_FONT_SIZE = 10
+
+    WINDOW_BG_COLOR = "#FEDBD0" ##336F84
+
     # setup tkinter
     window = tk.Tk()
     # window.geometry("500X600")
     window.minsize(300, 350)
     window.maxsize(300, 350)
-    window.configure(bg="#336F84")
+    window.configure(bg=WINDOW_BG_COLOR)
     window.title('Password Manager')
 
-    lenth_label = tk.Label(window, text="Lenth : ", bg="#336F84")
+    lenth_label = tk.Label(window, text="Lenth : ", bg=WINDOW_BG_COLOR)
     lenth_label.config(font=(LABEL_FONT_NAME, LABEL_FONT_SIZE))
     lenth_label.grid(row=0, column=0, padx=10, pady=20)
 
@@ -221,7 +253,7 @@ if __name__ == "__main__":
 
     # show generated password
     # label
-    password_label = tk.Label(window, text="Password: ", bg="#336F84")
+    password_label = tk.Label(window, text="Password: ", bg=WINDOW_BG_COLOR)
     password_label.config(font=(LABEL_FONT_NAME, LABEL_FONT_SIZE))
     password_label.grid(row=2,column=0, padx=10, pady=10)
     # entry
@@ -236,5 +268,5 @@ if __name__ == "__main__":
     save_button.grid(row=3, column=1, padx=10, pady=10)
     
     # exit program button
-    tk.Button(window, text="EXIT", bg="#EC7063", relief="raised", activebackground="#e35e17",command=exit).grid(row=4, columnspan=2, padx=10, pady=10)
+    tk.Button(window, text="EXIT", bg="#EC7063", relief="raised", activebackground="#e35e17",command=sys.exit).grid(row=4, columnspan=2, padx=10, pady=10)
     window.mainloop()
