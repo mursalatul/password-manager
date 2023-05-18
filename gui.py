@@ -202,6 +202,7 @@ def savePassword():
     save_wn = tk.Tk() # save_wn = save_window
     save_wn.minsize(SAVE_WINDOW_WIDTH, SAVE_WINDOW_HEIGHT)
     save_wn.maxsize(SAVE_WINDOW_WIDTH, SAVE_WINDOW_HEIGHT)
+    save_wn.title("Save Password")
     save_wn.configure(bg=SAVE_WINDOW_BG_COLOR)
 
     # home page button
