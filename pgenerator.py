@@ -98,3 +98,15 @@ class PGenerator:
                     generated_password.append(str(self.__punctuationSign()))
         random.shuffle(generated_password) # shuffling the password
         self.password =  "".join(generated_password) # set password
+
+class SetDependencies:
+    """
+    setup all dependencies for running the program
+    """
+    # check if the file present or not
+    def setFiles(self):
+        # creating admin.txt and saved_passwords.txt file if not present 
+        f = open('admin.txt', 'a')
+        f.close()
+        f = open('saved_passwords.txt', 'a')
+        f.close()

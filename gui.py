@@ -1,13 +1,19 @@
+import pgenerator
+# creating all dependencies
+pgenerator_obj1 = pgenerator.SetDependencies()
+pgenerator_obj1.setFiles()
+
+# build-in  packages
 import tkinter as tk
 import tkinter.messagebox as msgbox
 from  tkinter import ttk 
-
 import sys
 
-import pgenerator
+# custom headers
 import pstore
 
 # functions
+
 
 # login section starts
 def logInAsAdmin():
