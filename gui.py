@@ -24,6 +24,14 @@ def logInAsAdmin():
     untill the program is closed.
     """
     # functions of logInAsAdmin()
+    
+    # 
+    def setFocus2admin_password_entry(*args):
+        """
+        set set the Focus admin_password_entry
+        """
+        admin_password_entry.focus()
+
     def modifyText(adminWindowCustomFontForText: tuple, txtObjects: tuple) -> None:
         """
         modify texts of labels
@@ -92,6 +100,9 @@ def logInAsAdmin():
     #         entry
     admin_username_entry = tk.Entry(login_wn)
     admin_username_entry.grid(row=0, column=1, padx=10, pady=10)
+    admin_username_entry.focus()
+    admin_username_entry.bind('<Return>', setFocus2admin_password_entry)
+
 
     # password
     #         lable
@@ -116,7 +127,7 @@ def logInAsAdmin():
     login_wn.mainloop()
     # login section end
 
-def password_Insert():
+def password_Insert(*args):
     """
     clean password showing entry and display generated password
     """
@@ -169,50 +180,57 @@ def savePassword():
 
     # check if username and password present in the entry
     def checker():
-        if len(username_entry.get()) == 0:
+        if len(save_wn_username_entry.get()) == 0:
             msgbox.showinfo("Error", "No Username to save!")
-        elif len(password_entry.get()) == 0:
+        elif len(save_wn_pasword_entry.get()) == 0:
             msgbox.showinfo("Error", "No Password to save!")
         else:
             # save data in store
             pstore_obj = pstore.PStore()
             # saving username and password
-            pstore_obj.pStore(username_entry.get(), password_entry.get())
+            pstore_obj.pStore(save_wn_username_entry.get(), save_wn_pasword_entry.get())
             msgbox.showinfo("Done", "Password Saved")
             distoryAndEnable_Save_Button()
     
+    # save_wn gui maintaining properties
+    SAVE_WINDOW_BG_COLOR = "#BCF4BB"
+    SAVE_WINDOW_WIDTH = 280
+    SAVE_WINDOW_HEIGHT = 250
+    SAVE_WINDOW_TEXT_FONT = ("Montserrat", 12)
+
     # setup tkinter
     save_wn = tk.Tk() # save_wn = save_window
-    save_wn.minsize(450, 450)
-    save_wn.maxsize(450, 450)
-    save_wn.configure(bg="#5DADE2")
+    save_wn.minsize(SAVE_WINDOW_WIDTH, SAVE_WINDOW_HEIGHT)
+    save_wn.maxsize(SAVE_WINDOW_WIDTH, SAVE_WINDOW_HEIGHT)
+    save_wn.configure(bg=SAVE_WINDOW_BG_COLOR)
 
     # home page button
-    tk.Button(save_wn, text="HOME", command=distoryAndEnable_Save_Button).grid(row=0, column=0)
+    tk.Button(save_wn, text="HOME", command=distoryAndEnable_Save_Button, bg="#92FA5A", activebackground="#B2FC89").grid(row=0, column=0, padx=10, pady=10)
     # exit button
-    tk.Button(save_wn, text="Exit", command=distoryAndEnable_Save_Button).grid(row=0, column=1)
+    tk.Button(save_wn, text="Exit", command=distoryAndEnable_Save_Button, bg="#DCFC6C", activebackground="#D9FF56").grid(row=0, column=1, padx=10, pady=10)
 
-    # username lable
-    username_lable = tk.Label(save_wn, text="Username")
-    username_lable.grid(row=1,column=1)
+    # username label
+    save_wn_username_label = tk.Label(save_wn, text="Username", bg=SAVE_WINDOW_BG_COLOR, font=SAVE_WINDOW_TEXT_FONT)
+    save_wn_username_label.grid(row=1,column=0, padx=10, pady=10)
 
     # username entry
-    username_entry = tk.Entry(save_wn)
-    username_entry.grid(row=1, column=2)
+    save_wn_username_entry = tk.Entry(save_wn)
+    save_wn_username_entry.grid(row=1, column=1, padx=10, pady=10)
 
-    # password lable
-    password_lable = tk.Label(save_wn, text="Password")
-    password_lable.grid(row=2,column=1)
+    # password label
+    save_wn_pasword_label = tk.Label(save_wn, text="Password", bg=SAVE_WINDOW_BG_COLOR, font=SAVE_WINDOW_TEXT_FONT)
+    save_wn_pasword_label.grid(row=2,column=0, padx=10, pady=10)
 
     # password entry
-    password_entry = tk.Entry(save_wn)
-    password_entry.grid(row=2, column=2)
+    save_wn_pasword_entry = tk.Entry(save_wn)
+    save_wn_pasword_entry.grid(row=2, column=1, padx=10, pady=10)
     # adding generated password
-    password_entry.insert(0, generated_password_entry.get())
+    save_wn_pasword_entry.insert(0, generated_password_entry.get())
 
     # save button
-    save_button = tk.Button(save_wn, text="Save", command=checker)
-    save_button.grid(row=3, column=1)
+    save_wn_save_button = tk.Button(save_wn, text="Save", command=checker, bg="#92FA5A", activebackground="#B2FC89", font=SAVE_WINDOW_TEXT_FONT)
+    save_wn_save_button.grid(row=3, columnspan=2, padx=10, pady=10)
+
     save_wn.mainloop()
 
 # save generated password
@@ -251,6 +269,9 @@ if __name__ == "__main__":
     # take lenth from user
     password_len = tk.Entry(window)
     password_len.grid(row=0, column=1, pady=10)
+    password_len.focus()
+    # blinding the enter key to the 'Generate' key
+    password_len.bind('<Return>', password_Insert)
 
     # generate button
     generate_button = tk.Button(window, text="Generate", bg='#AED7E5', activebackground='#4CB5DA', command=password_Insert)
